@@ -1,0 +1,17 @@
+---
+- name: Simple playbook to create a user
+  hosts: all
+  become: true
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Create a user with name from vars file
+      ansible.builtin.user:
+        name: "{{ user_info.name }}"
+        comment: "{{ user_info.job }}"
+        state: present
+
+    - name: Display user details
+      ansible.builtin.debug:
+        msg: "User {{ user_info.name }} with job {{ user_info.job }} has been created."
